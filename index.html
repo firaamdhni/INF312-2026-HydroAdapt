@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>HydroAdapt Simulation</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main id="gameApp" class="game-app">
+
+    <!-- =========================
+         LANDING PAGE
+    ========================== -->
+    <section id="landingScreen" class="screen landing-screen active">
+
+      <!-- Tombol Profil -->
+      <button
+        class="image-button profile-button"
+        type="button"
+        data-popup="profilePopup"
+        aria-label="Buka profil"
+      >
+        <img
+          src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/profil%20btn.png"
+          alt="Profil"
+        />
+      </button>
+
+      <!-- Tombol About -->
+      <button
+        class="image-button about-button"
+        type="button"
+        data-popup="aboutPopup"
+        aria-label="Tentang HydroAdapt"
+      >
+        <img
+          src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/about%20btn.png"
+          alt="Tentang"
+        />
+      </button>
+
+      <!-- Logo dan tombol utama -->
+      <div class="landing-center">
+
+        <div class="brand-group">
+          <img
+            class="brand-mascot"
+            src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/logo.png"
+            alt="Logo HydroAdapt"
+          />
+
+          <img
+            class="brand-title"
+            src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/HydroAdapt.png"
+            alt="HydroAdapt"
+          />
+        </div>
+
+        <button
+          id="startButton"
+          class="image-button start-button"
+          type="button"
+          aria-label="Mulai permainan"
+        >
+          <img
+            src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/mulai%20btn.png"
+            alt="Mulai"
+          />
+        </button>
+
+        <div class="secondary-menu">
+          <button
+            class="image-button secondary-button"
+            type="button"
+            data-popup="collectionPopup"
+            aria-label="Buka koleksi"
+          >
+            <img
+              src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/koleksi%20btn.png"
+              alt="Koleksi"
+            />
+          </button>
+
+          <button
+            class="image-button secondary-button"
+            type="button"
+            data-popup="settingsPopup"
+            aria-label="Buka pengaturan"
+          >
+            <img
+              src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/opsi%20btn.png"
+              alt="Opsi"
+            />
+          </button>
+        </div>
+      </div>
+
+      <p class="landing-version">HydroAdapt Simulation</p>
+    </section>
+
+   <!-- =========================
+     START POPUP
+========================= -->
+<div id="startPopup" class="popup-overlay start-popup-overlay" aria-hidden="true">
+  <section class="start-popup-card" role="dialog" aria-modal="true">
+
+    <div class="start-tabs">
+  <button
+    class="start-tab active"
+    type="button"
+    data-start-tab="new"
+  >
+    Baru
+  </button>
+
+  <button
+    class="start-tab"
+    type="button"
+    data-start-tab="continue"
+  >
+    Lanjut
+  </button>
+
+  <button
+    class="start-tab"
+    type="button"
+    data-start-tab="challenge"
+  >
+    Tantangan
+  </button>
+</div>
+
+    <!-- PANEL GAME BARU -->
+    <div id="newGamePanel" class="start-panel active">
+
+      <div class="mode-selector">
+        <button
+          id="previousModeButton"
+          class="mode-arrow-button"
+          type="button"
+          aria-label="Mode sebelumnya"
+        >
+          <img
+            src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/start%20pop%20up/left.png"
+            alt="Sebelumnya"
+          />
+        </button>
+
+        <div class="mode-display">
+          <span class="mode-label">Pilih Mode</span>
+
+          <div class="mode-content">
+            <img
+              id="selectedModeIcon"
+              class="selected-mode-icon"
+              src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/start%20pop%20up/normal%20icon.png"
+              alt="Mode Normal"
+            />
+
+            <strong id="selectedModeName">Normal</strong>
+          </div>
+        </div>
+
+        <button
+          id="nextModeButton"
+          class="mode-arrow-button"
+          type="button"
+          aria-label="Mode selanjutnya"
+        >
+          <img
+            src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/start%20pop%20up/right.png"
+            alt="Selanjutnya"
+          />
+        </button>
+      </div>
+
+      <p id="selectedModeDescription" class="mode-description">
+        Kondisi awal stabil dan cocok untuk pemain baru.
+      </p>
+
+      <button
+        id="playNewGameButton"
+        class="start-main-button"
+        type="button"
+      >
+        <img
+          src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/start%20pop%20up/main%20btn.png"
+          alt="Main"
+        />
+      </button>
+    </div>
+
+    <!-- PANEL LANJUT -->
+    <div id="continuePanel" class="start-panel">
+      <div class="continue-content">
+        <h3>Lanjutkan Permainan</h3>
+
+        <div id="savedProgressCard" class="saved-progress-card">
+          <div>
+            <span>Hari</span>
+            <strong id="savedDay">1</strong>
+          </div>
+
+          <div>
+            <span>Kesehatan</span>
+            <strong id="savedHealth">100%</strong>
+          </div>
+
+          <div>
+            <span>Skor</span>
+            <strong id="savedScore">0</strong>
+          </div>
+        </div>
+
+        <p id="noSavedProgressMessage" class="no-progress-message">
+          Belum ada progress permainan yang tersimpan.
+        </p>
+
+        <button
+          id="continueGameButton"
+          class="start-main-button"
+          type="button"
+        >
+          <img
+            src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/start%20pop%20up/lanjut%20btn.png"
+            alt="Lanjutkan"
+          />
+        </button>
+      </div>
+    </div>
+
+    <!-- PANEL TANTANGAN -->
+    <div id="challengePanel" class="start-panel">
+      <div class="challenge-content">
+        <h3>Mode Tantangan</h3>
+
+        <p>
+          Kondisi cuaca dan kerusakan akan dipilih secara acak oleh sistem.
+        </p>
+
+        <div class="random-challenge-preview">
+          <span>?</span>
+          <strong>Tantangan Acak</strong>
+        </div>
+
+        <button
+          id="playChallengeButton"
+          class="start-main-button"
+          type="button"
+        >
+          <img
+            src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/start%20pop%20up/main%20btn.png"
+            alt="Main"
+          />
+        </button>
+      </div>
+    </div>
+
+    <!-- TOMBOL KEMBALI -->
+    <button
+      id="closeStartPopupButton"
+      class="start-back-button"
+      type="button"
+    >
+      <img
+        src="https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/start%20pop%20up/kembali%20btn.png"
+        alt="Kembali"
+      />
+    </button>
+
+  </section>
+</div>
+
+    <!-- =========================
+         POPUP PROFIL
+    ========================== -->
+    <div id="profilePopup" class="popup-overlay" aria-hidden="true">
+      <div class="popup-card">
+        <button class="popup-close" type="button" aria-label="Tutup">
+          ×
+        </button>
+
+        <h2>Profil</h2>
+
+        <div class="profile-avatar">H</div>
+
+        <p class="profile-name">Pemain HydroAdapt</p>
+        <p class="profile-level">Level 1 · Pemula Hidroponik</p>
+
+        <div class="profile-stats">
+          <div>
+            <strong>0</strong>
+            <span>Tanaman</span>
+          </div>
+
+          <div>
+            <strong>0</strong>
+            <span>Panen</span>
+          </div>
+
+          <div>
+            <strong>0</strong>
+            <span>Skor</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================
+         POPUP ABOUT
+    ========================== -->
+    <div id="aboutPopup" class="popup-overlay" aria-hidden="true">
+      <div class="popup-card">
+        <button class="popup-close" type="button" aria-label="Tutup">
+          ×
+        </button>
+
+        <h2>Tentang HydroAdapt</h2>
+
+        <p>
+          HydroAdapt adalah permainan simulasi hidroponik yang
+          mengajak pemain menyemai, merawat tanaman, mengelola air
+          dan nutrisi, serta menghadapi berbagai tantangan.
+        </p>
+
+        <p class="popup-small-text">
+          Prototype simulasi HydroAdapt.
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================
+         POPUP KOLEKSI
+    ========================== -->
+    <div id="collectionPopup" class="popup-overlay" aria-hidden="true">
+      <div class="popup-card popup-card-large">
+        <button class="popup-close" type="button" aria-label="Tutup">
+          ×
+        </button>
+
+        <h2>Koleksi Tanaman</h2>
+
+        <div class="collection-grid">
+          <div class="collection-item unlocked">
+            <div class="collection-plant">🌱</div>
+            <span>Selada</span>
+          </div>
+
+          <div class="collection-item">
+            <div class="collection-plant">🔒</div>
+            <span>Pakcoy</span>
+          </div>
+
+          <div class="collection-item">
+            <div class="collection-plant">🔒</div>
+            <span>Kangkung</span>
+          </div>
+
+          <div class="collection-item">
+            <div class="collection-plant">🔒</div>
+            <span>Bayam</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================
+         POPUP PENGATURAN
+    ========================== -->
+    <div id="settingsPopup" class="popup-overlay" aria-hidden="true">
+      <div class="popup-card">
+        <button class="popup-close" type="button" aria-label="Tutup">
+          ×
+        </button>
+
+        <h2>Pengaturan</h2>
+
+        <div class="setting-row">
+          <span>Musik</span>
+
+          <label class="switch">
+            <input id="musicToggle" type="checkbox" checked />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <span>Efek Suara</span>
+
+          <label class="switch">
+            <input id="soundToggle" type="checkbox" checked />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row setting-column">
+          <label for="volumeRange">Volume</label>
+
+          <input
+            id="volumeRange"
+            type="range"
+            min="0"
+            max="100"
+            value="70"
+          />
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
