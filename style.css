@@ -1,6 +1,6 @@
-/* =========================
-   RESET
-========================= */
+/* ==================================================
+   RESET & APP
+================================================== */
 
 * {
   box-sizing: border-box;
@@ -9,18 +9,15 @@
 html,
 body {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   margin: 0;
 }
 
 body {
   overflow: hidden;
   background: #b9dfc8;
-  font-family:
-    "Trebuchet MS",
-    Arial,
-    sans-serif;
   color: #294849;
+  font-family: "Trebuchet MS", Arial, sans-serif;
 }
 
 button,
@@ -32,14 +29,10 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* =========================
-   APP DAN SCREEN
-========================= */
-
 .game-app {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -47,407 +40,184 @@ button {
   display: none;
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
+  height: 100%;
   min-height: 100vh;
 }
 
 .screen.active {
+  display: block;
+  z-index: 2;
+}
+
+.landing-screen.active {
   display: flex;
 }
 
-/* =========================
+.image-button,
+.main-image-button,
+.zoom-image-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.image-button img,
+.main-image-button img,
+.zoom-image-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.image-button:hover,
+.main-image-button:hover,
+.zoom-image-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.05) drop-shadow(0 6px 7px rgba(42, 82, 65, 0.2));
+}
+
+.image-button:active,
+.main-image-button:active,
+.zoom-image-button:active {
+  transform: scale(0.96);
+}
+
+/* ==================================================
    LANDING PAGE
-========================= */
+================================================== */
 
 .landing-screen {
-  position: relative;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-
   background:
     url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/Landing%20Page.png")
     center / cover no-repeat;
 }
 
-/* Lapisan warna cair bergerak */
 .landing-screen::before,
 .landing-screen::after {
   content: "";
   position: absolute;
-
-  width: 120vmax;
-  height: 120vmax;
-
-  top: 50%;
-  left: 50%;
-
-  border-radius: 42% 58% 55% 45% / 45% 42% 58% 55%;
-
+  inset: -8%;
   pointer-events: none;
-  mix-blend-mode: soft-light;
 }
 
 .landing-screen::before {
   background:
-    radial-gradient(
-      circle at 30% 35%,
-      rgba(255, 255, 255, 0.55),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 70% 65%,
-      rgba(56, 191, 203, 0.42),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 58% 22%,
-      rgba(125, 206, 126, 0.42),
-      transparent 34%
-    );
-
-  animation: landing-liquid-spin 24s linear infinite;
-
-  transform: translate(-50%, -50%);
+    radial-gradient(circle at 28% 28%, rgba(255, 255, 255, 0.14), transparent 30%),
+    radial-gradient(circle at 72% 58%, rgba(98, 201, 199, 0.17), transparent 34%);
+  animation: landing-flow 15s ease-in-out infinite alternate;
 }
 
 .landing-screen::after {
-  width: 95vmax;
-  height: 95vmax;
-
-  background:
-    conic-gradient(
-      from 30deg,
-      rgba(87, 199, 195, 0.18),
-      rgba(170, 225, 171, 0.34),
-      rgba(234, 255, 243, 0.32),
-      rgba(69, 180, 198, 0.25),
-      rgba(87, 199, 195, 0.18)
-    );
-
-  animation: landing-liquid-spin-reverse 31s linear infinite;
-
-  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 58% 18%, rgba(159, 221, 143, 0.16), transparent 31%);
+  animation: landing-flow-reverse 18s ease-in-out infinite alternate;
 }
 
-@keyframes landing-liquid-spin {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg) scale(1);
-  }
-
-  50% {
-    transform: translate(-50%, -50%) rotate(180deg) scale(1.08);
-  }
-
+@keyframes landing-flow {
   to {
-    transform: translate(-50%, -50%) rotate(360deg) scale(1);
+    transform: translate(-12px, 10px) scale(1.04) rotate(1deg);
   }
 }
 
-@keyframes landing-liquid-spin-reverse {
-  from {
-    transform: translate(-50%, -50%) rotate(360deg) scale(1.05);
-  }
-
-  50% {
-    transform: translate(-50%, -50%) rotate(180deg) scale(0.96);
-  }
-
+@keyframes landing-flow-reverse {
   to {
-    transform: translate(-50%, -50%) rotate(0deg) scale(1.05);
+    transform: translate(12px, -10px) scale(1.04) rotate(-1deg);
   }
 }
 
-/* Supaya isi landing tetap berada di atas animasi */
-.landing-center,
-.profile-button,
-.about-button,
-.landing-version {
+.landing-center {
+  position: relative;
   z-index: 3;
+  width: min(820px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-group {
-  position: relative;
-
-  width: min(460px, 75vw);
-  min-height: 230px;
-
+  width: min(620px, 82vw);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 
 .brand-mascot {
-  position: absolute;
-
-  width: min(210px, 34vw);
-  max-height: 215px;
-
+  width: min(235px, 28vw);
+  max-height: 220px;
   object-fit: contain;
-
-  transform: translateY(-34px);
-
-  filter:
-    drop-shadow(0 10px 16px rgba(45, 116, 109, 0.22));
+  margin-bottom: 4px;
+  filter: drop-shadow(0 10px 17px rgba(45, 100, 94, 0.2));
 }
 
 .brand-title {
-  position: relative;
-
-  width: min(440px, 72vw);
-  max-height: 150px;
-
-  margin-top: 118px;
-
+  width: min(520px, 68vw);
+  max-height: 130px;
   object-fit: contain;
-
-  filter:
-    drop-shadow(0 8px 10px rgba(47, 118, 110, 0.18));
-}
-
-/* =========================
-   IMAGE BUTTON
-========================= */
-
-.image-button {
-  padding: 0;
-  border: 0;
-
-  background: transparent;
-
-  cursor: pointer;
-
-  transition:
-    transform 160ms ease,
-    filter 160ms ease;
-}
-
-.image-button img {
-  display: block;
-  width: 100%;
-  height: auto;
-
-  object-fit: contain;
-
-  pointer-events: none;
-}
-
-.image-button:hover {
-  transform: translateY(-3px) scale(1.025);
-
-  filter:
-    brightness(1.04)
-    drop-shadow(0 8px 9px rgba(42, 102, 100, 0.19));
-}
-
-.image-button:active {
-  transform: scale(0.96);
-}
-
-/* =========================
-   LANDING BUTTON POSITIONS
-========================= */
-
-.profile-button {
-  position: absolute;
-  z-index: 4;
-
-  top: 25px;
-  left: 25px;
-
-  width: clamp(54px, 6vw, 82px);
-}
-
-.about-button {
-  position: absolute;
-  z-index: 4;
-
-  right: 25px;
-  bottom: 24px;
-
-  width: clamp(50px, 5.5vw, 76px);
-}
-
-.start-button {
-  width: min(225px, 44vw);
-  margin: 5px 0 11px;
+  filter: drop-shadow(0 7px 10px rgba(47, 118, 110, 0.18));
 }
 
 .secondary-menu {
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 14px;
-}
-
-.secondary-button {
-  width: min(150px, 31vw);
-}
-
-.landing-version {
-  position: absolute;
-  z-index: 2;
-
-  bottom: 13px;
-  left: 50%;
-
-  margin: 0;
-
-  color: rgba(45, 95, 91, 0.6);
-
-  font-size: 11px;
-  font-weight: 700;
-
-  transform: translateX(-50%);
-}
-
-/* =========================
-   MODE SCREEN
-========================= */
-
-.mode-screen {
-  align-items: center;
-  justify-content: center;
-
-  padding: 28px;
-
+  padding: 18px 24px;
   background:
-    linear-gradient(
-      rgba(214, 248, 226, 0.78),
-      rgba(149, 209, 207, 0.76)
-    ),
-    url("assets/landing-bg.png") center / cover no-repeat;
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hal%20awal/Rectangle%204.png")
+    center / 100% 100% no-repeat;
 }
 
-.mode-panel {
-  width: min(560px, 94vw);
-
-  padding: 30px;
-
-  border: 2px solid rgba(255, 255, 255, 0.72);
-  border-radius: 26px;
-
-  background: rgba(225, 248, 245, 0.9);
-
-  box-shadow:
-    0 18px 45px rgba(44, 106, 101, 0.22);
-
-  backdrop-filter: blur(10px);
+.start-button,
+.collection-button {
+  width: clamp(135px, 12vw, 190px);
 }
 
-.mode-panel h1 {
-  margin: 15px 0 6px;
-
-  color: #397b69;
-
-  text-align: center;
+.settings-button {
+  width: clamp(105px, 9vw, 145px);
 }
 
-.mode-panel > p {
-  margin: 0 0 22px;
-
-  color: #557573;
-
-  text-align: center;
+.profile-button {
+  position: absolute;
+  z-index: 5;
+  left: 22px;
+  bottom: 18px;
+  width: clamp(62px, 6vw, 100px);
 }
 
-.text-back-button {
-  padding: 8px 13px;
-
-  border: 0;
-  border-radius: 14px;
-
-  background: rgba(122, 190, 152, 0.24);
-  color: #397b69;
-
-  font-weight: 800;
-
-  cursor: pointer;
+.about-button {
+  position: absolute;
+  z-index: 5;
+  right: 22px;
+  bottom: 18px;
+  width: clamp(50px, 5vw, 76px);
 }
 
-.mode-list {
-  display: grid;
-  gap: 12px;
-}
-
-.mode-card {
-  width: 100%;
-
-  padding: 17px 18px;
-
-  border: 2px solid rgba(94, 169, 141, 0.24);
-  border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.72);
-  color: #315e59;
-
-  text-align: left;
-
-  cursor: pointer;
-
-  transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    background 160ms ease;
-}
-
-.mode-card strong,
-.mode-card span {
-  display: block;
-}
-
-.mode-card strong {
-  margin-bottom: 5px;
-
-  color: #317a5e;
-
-  font-size: 17px;
-}
-
-.mode-card span {
-  color: #6b8480;
-
-  font-size: 13px;
-}
-
-.mode-card:not(.locked):hover {
-  border-color: #79b991;
-  background: #ffffff;
-
-  transform: translateY(-2px);
-}
-
-.mode-card.locked {
-  cursor: not-allowed;
-  opacity: 0.55;
-}
-
-/* =========================
-   POPUP
-========================= */
+/* ==================================================
+   POPUP DASAR
+================================================== */
 
 .popup-overlay {
   visibility: hidden;
   opacity: 0;
-
   position: fixed;
-  z-index: 20;
+  z-index: 100;
   inset: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 24px;
-
-  background: rgba(24, 55, 54, 0.47);
-
-  transition:
-    opacity 180ms ease,
-    visibility 180ms ease;
+  padding: 22px;
+  background: rgba(22, 52, 50, 0.52);
+  transition: opacity 170ms ease, visibility 170ms ease;
 }
 
 .popup-overlay.show {
@@ -457,64 +227,37 @@ button {
 
 .popup-card {
   position: relative;
-
-  width: min(420px, 94vw);
-
-  padding: 30px 25px 25px;
-
-  border: 2px solid rgba(255, 255, 255, 0.72);
-  border-radius: 25px;
-
-  background:
-    linear-gradient(
-      160deg,
-      rgba(224, 250, 245, 0.98),
-      rgba(185, 225, 223, 0.98)
-    );
-
-  box-shadow:
-    0 22px 55px rgba(17, 54, 52, 0.28);
-
+  width: min(430px, 94vw);
+  padding: 30px 26px 25px;
+  border: 3px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  background: linear-gradient(155deg, rgba(224, 250, 245, 0.98), rgba(185, 225, 223, 0.98));
+  box-shadow: 0 22px 55px rgba(17, 54, 52, 0.28);
   text-align: center;
-
-  transform: translateY(16px) scale(0.97);
-
-  transition: transform 180ms ease;
-}
-
-.popup-overlay.show .popup-card {
-  transform: translateY(0) scale(1);
 }
 
 .popup-card-large {
-  width: min(560px, 94vw);
+  width: min(580px, 94vw);
 }
 
-.popup-close {
+.popup-close,
+.game-modal-close {
   position: absolute;
-
-  top: 12px;
-  right: 13px;
-
+  top: 10px;
+  right: 12px;
   width: 34px;
   height: 34px;
-
   border: 0;
   border-radius: 50%;
-
-  background: rgba(81, 151, 136, 0.16);
+  background: rgba(255, 255, 255, 0.38);
   color: #397b69;
-
   font-size: 23px;
-  font-weight: 700;
-  line-height: 1;
-
+  font-weight: 800;
   cursor: pointer;
 }
 
 .popup-card h2 {
   margin: 4px 0 17px;
-
   color: #397b69;
 }
 
@@ -525,65 +268,45 @@ button {
 
 .popup-small-text {
   margin-top: 20px;
-
   font-size: 12px;
-  opacity: 0.72;
+  opacity: 0.75;
 }
-
-/* =========================
-   PROFIL
-========================= */
 
 .profile-avatar {
   width: 76px;
   height: 76px;
-
   margin: 0 auto 12px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 4px solid rgba(255, 255, 255, 0.75);
+  display: grid;
+  place-items: center;
+  border: 4px solid rgba(255, 255, 255, 0.76);
   border-radius: 50%;
-
   background: #79bd94;
-  color: #ffffff;
-
+  color: #fff;
   font-size: 31px;
   font-weight: 900;
-
-  box-shadow:
-    0 8px 15px rgba(57, 123, 105, 0.2);
 }
 
 .profile-name {
   margin: 0 !important;
-
   color: #356a60 !important;
-
   font-size: 18px;
   font-weight: 800;
 }
 
 .profile-level {
   margin: 4px 0 18px !important;
-
   font-size: 13px;
 }
 
 .profile-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
   gap: 8px;
 }
 
 .profile-stats > div {
   padding: 12px 6px;
-
   border-radius: 14px;
-
   background: rgba(255, 255, 255, 0.56);
 }
 
@@ -599,48 +322,33 @@ button {
 
 .profile-stats span {
   margin-top: 3px;
-
   color: #6c8580;
   font-size: 11px;
 }
 
-/* =========================
-   KOLEKSI
-========================= */
-
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-
   gap: 12px;
 }
 
 .collection-item {
   min-height: 110px;
-
   padding: 13px 7px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   border-radius: 16px;
-
   background: rgba(255, 255, 255, 0.45);
-
   color: #718581;
-
   opacity: 0.62;
 }
 
 .collection-item.unlocked {
   border: 2px solid rgba(103, 179, 135, 0.35);
-
   background: rgba(255, 255, 255, 0.78);
-
   color: #397b69;
-
   opacity: 1;
 }
 
@@ -654,32 +362,21 @@ button {
   font-weight: 800;
 }
 
-/* =========================
-   SETTINGS
-========================= */
-
 .setting-row {
   min-height: 52px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 10px 3px;
-
   border-bottom: 1px solid rgba(69, 130, 117, 0.14);
-
   color: #436e68;
-
   font-weight: 700;
 }
 
 .setting-column {
   align-items: stretch;
   flex-direction: column;
-
   gap: 12px;
-
   text-align: left;
 }
 
@@ -690,7 +387,6 @@ button {
 
 .switch {
   position: relative;
-
   width: 46px;
   height: 26px;
 }
@@ -698,38 +394,27 @@ button {
 .switch input {
   width: 0;
   height: 0;
-
   opacity: 0;
 }
 
 .switch-slider {
   position: absolute;
   inset: 0;
-
   border-radius: 26px;
-
   background: #b5cac6;
-
   cursor: pointer;
-
   transition: 180ms ease;
 }
 
 .switch-slider::before {
   content: "";
-
   position: absolute;
-
-  width: 20px;
-  height: 20px;
-
   left: 3px;
   top: 3px;
-
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-
-  background: #ffffff;
-
+  background: #fff;
   transition: 180ms ease;
 }
 
@@ -741,182 +426,54 @@ button {
   transform: translateX(20px);
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-  .landing-center {
-    width: 90vw;
-  }
-
-  .brand-group {
-    min-height: 200px;
-  }
-
-  .brand-mascot {
-    width: min(185px, 43vw);
-  }
-
-  .brand-title {
-    width: min(385px, 84vw);
-    margin-top: 105px;
-  }
-
-  .start-button {
-    width: min(210px, 55vw);
-  }
-
-  .secondary-button {
-    width: min(138px, 36vw);
-  }
-
-  .profile-button {
-    top: 18px;
-    left: 17px;
-  }
-
-  .about-button {
-    right: 17px;
-    bottom: 18px;
-  }
-
-  .collection-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* =========================
-   LANDSCAPE PENDEK
-========================= */
-
-@media (max-height: 560px) and (orientation: landscape) {
-  .brand-group {
-    min-height: 150px;
-    margin-bottom: 0;
-  }
-
-  .brand-mascot {
-    width: 130px;
-    transform: translateY(-25px);
-  }
-
-  .brand-title {
-    width: 330px;
-    margin-top: 78px;
-  }
-
-  .start-button {
-    width: 165px;
-  }
-
-  .secondary-button {
-    width: 110px;
-  }
-
-  .landing-version {
-    display: none;
-  }
-}
-
-/* =========================
+/* ==================================================
    START POPUP
-========================= */
+================================================== */
 
 .start-popup-overlay {
-  background: rgba(18, 43, 45, 0.56);
-  padding: 18px;
+  background: rgba(18, 43, 45, 0.58);
 }
 
 .start-popup-card {
   position: relative;
-
-  width: min(430px, 94vw);
-  min-height: 335px;
-
-  padding: 14px 16px 13px;
-
+  width: min(560px, 95vw);
+  min-height: 400px;
+  padding: 18px 20px 16px;
   border: 3px solid rgba(232, 255, 249, 0.9);
-  border-radius: 22px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #74c4d0 0%,
-      #70bdc8 100%
-    );
-
-  box-shadow:
-    0 16px 34px rgba(18, 61, 64, 0.28),
-    inset 0 0 18px rgba(255, 255, 255, 0.14);
-
+  border-radius: 24px;
+  background: linear-gradient(180deg, #74c4d0 0%, #70bdc8 100%);
+  box-shadow: 0 16px 34px rgba(18, 61, 64, 0.28), inset 0 0 18px rgba(255, 255, 255, 0.14);
   overflow: hidden;
 }
 
-/* =========================
-   TAB ATAS
-========================= */
-
 .start-tabs {
-  width: 100%;
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
-  gap: 10px;
-
-  margin-bottom: 21px;
+  gap: 12px;
+  margin-bottom: 28px;
 }
 
 .start-tab {
-  height: 31px;
-
-  padding: 0 8px;
-
-  border: 2px solid rgba(230, 255, 241, 0.8);
-  border-radius: 5px;
-
+  height: 38px;
+  padding: 0 12px;
+  border: 2px solid rgba(230, 255, 241, 0.82);
+  border-radius: 6px;
   background: #a9d8d6;
   color: #65a870;
-
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
-
-  box-shadow:
-    inset 0 -2px 0 rgba(80, 145, 137, 0.15);
-
   cursor: pointer;
-
-  transition:
-    background 150ms ease,
-    color 150ms ease,
-    transform 150ms ease,
-    filter 150ms ease;
-}
-
-.start-tab:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
 }
 
 .start-tab.active {
   background: #9bd578;
-  color: #ffffff;
-
-  border-color: rgba(237, 255, 225, 0.95);
-
-  box-shadow:
-    inset 0 -2px 0 rgba(75, 135, 77, 0.16),
-    0 3px 7px rgba(53, 117, 94, 0.14);
+  color: #fff;
 }
-
-/* =========================
-   PANEL
-========================= */
 
 .start-panel {
   display: none;
-  min-height: 223px;
+  width: 100%;
+  min-height: 265px;
 }
 
 .start-panel.active {
@@ -925,88 +482,50 @@ button {
   align-items: center;
 }
 
-/* =========================
-   MODE SELECTOR
-========================= */
-
 .mode-selector {
   width: 100%;
-
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
   align-items: center;
-
-  gap: 10px;
+  gap: 13px;
 }
 
 .mode-arrow-button {
-  width: 32px;
-  height: 58px;
-
+  width: 42px;
+  height: 72px;
   padding: 0;
-
-  border: none;
+  border: 0;
   background: transparent;
-
   cursor: pointer;
-
-  transition:
-    transform 140ms ease,
-    filter 140ms ease;
 }
 
 .mode-arrow-button img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: fill;
 }
 
-.mode-arrow-button:hover {
-  transform: scale(1.06);
-  filter: brightness(1.05);
-}
-
-.mode-arrow-button:active {
-  transform: scale(0.95);
-}
-
 .mode-display {
   position: relative;
-
-  min-height: 61px;
-
-  padding: 17px 16px 8px;
-
-  border: 3px solid rgba(235, 255, 229, 0.94);
-  border-radius: 5px;
-
+  min-height: 82px;
+  padding: 24px 18px 12px;
+  border: 4px solid rgba(235, 255, 229, 0.94);
+  border-radius: 7px;
   background: #c6e8c6;
-
-  box-shadow:
-    inset 0 0 0 1px rgba(87, 157, 101, 0.17);
-
   text-align: center;
 }
 
 .mode-label {
   position: absolute;
-
-  top: -10px;
+  top: -13px;
   left: 50%;
-
-  min-width: 69px;
-
-  padding: 2px 8px;
-
-  border-radius: 4px;
-
+  min-width: 98px;
+  padding: 4px 12px;
+  border-radius: 5px;
   background: #8dc86f;
-  color: #ffffff;
-
-  font-size: 8px;
+  color: #fff;
+  font-size: 10px;
   font-weight: 800;
-
   transform: translateX(-50%);
 }
 
@@ -1014,150 +533,99 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 11px;
+  gap: 13px;
 }
 
 .selected-mode-icon {
-  width: 31px;
-  height: 31px;
-
+  width: 42px;
+  height: 42px;
   object-fit: contain;
 }
 
 .mode-content strong {
   color: #5da56e;
-
-  font-size: 18px;
+  font-size: 23px;
   font-weight: 800;
 }
 
-/* Penjelasan tetap sama */
 .mode-description {
-  min-height: 28px;
-
-  margin: 10px 18px 7px;
-
-  color: #eefef7;
-
-  font-size: 9px;
+  min-height: 36px;
+  margin: 14px 20px 8px;
+  color: #f2fff5;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.35;
-
+  line-height: 1.4;
   text-align: center;
 }
 
-/* =========================
-   TOMBOL MAIN
-========================= */
-
 .start-main-button {
-  width: 92px;
-
-  margin-top: 5px;
+  width: 120px;
+  margin-top: 6px;
   padding: 0;
-
-  border: none;
+  border: 0;
   background: transparent;
-
   cursor: pointer;
-
-  transition:
-    transform 150ms ease,
-    filter 150ms ease;
 }
 
 .start-main-button img {
   display: block;
   width: 100%;
-  height: auto;
 }
 
-.start-main-button:hover {
-  transform: translateY(-1px) scale(1.02);
-
-  filter:
-    brightness(1.04)
-    drop-shadow(0 4px 5px rgba(38, 85, 76, 0.18));
+.text-action-button {
+  min-height: 44px;
+  border: 3px solid rgba(235, 255, 229, 0.9);
+  border-radius: 8px;
+  background: #9bd578;
+  color: #fff;
+  font-weight: 900;
 }
-
-.start-main-button:active {
-  transform: scale(0.96);
-}
-
-/* =========================
-   TOMBOL KEMBALI
-========================= */
 
 .start-back-button {
   width: 100%;
-
-  margin-top: 9px;
+  margin-top: 12px;
   padding: 0;
-
-  border: none;
+  border: 0;
   background: transparent;
-
   cursor: pointer;
-
-  transition: filter 140ms ease;
 }
 
 .start-back-button img {
   display: block;
-
   width: 100%;
-  height: 20px;
-
+  height: 24px;
   object-fit: fill;
 }
-
-.start-back-button:hover {
-  filter: brightness(1.07);
-}
-
-/* =========================
-   PANEL LANJUT
-========================= */
 
 .continue-content,
 .challenge-content {
   width: 100%;
-
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
-
   text-align: center;
 }
 
 .continue-content h3,
 .challenge-content h3 {
-  margin: 2px 0 12px;
-
+  margin: 3px 0 16px;
   color: #f2fff2;
-
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .saved-progress-card {
   width: 100%;
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
-  gap: 7px;
-
-  margin-bottom: 12px;
+  gap: 9px;
+  margin-bottom: 15px;
 }
 
 .saved-progress-card > div {
-  padding: 11px 6px;
-
+  padding: 14px 7px;
   border: 2px solid rgba(230, 255, 223, 0.8);
-  border-radius: 9px;
-
+  border-radius: 10px;
   background: rgba(201, 232, 194, 0.82);
 }
 
@@ -1168,125 +636,2732 @@ button {
 
 .saved-progress-card span {
   margin-bottom: 4px;
-
   color: #5c8c67;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .saved-progress-card strong {
   color: #4c925e;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .no-progress-message {
   display: none;
-
   color: #effff1;
-
-  font-size: 11px;
+  font-size: 12px;
 }
 
-/* =========================
-   PANEL TANTANGAN
-========================= */
-
 .challenge-content > p {
-  max-width: 290px;
-
-  margin: 0 0 13px;
-
+  max-width: 360px;
+  margin: 0 0 16px;
   color: #effff3;
-
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
 .random-challenge-preview {
-  width: 155px;
-  min-height: 76px;
-
-  margin-bottom: 13px;
-
+  width: 190px;
+  min-height: 95px;
+  margin-bottom: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   border: 3px dashed rgba(230, 255, 223, 0.78);
   border-radius: 11px;
-
   background: rgba(200, 230, 191, 0.56);
 }
 
 .random-challenge-preview span {
-  margin-bottom: 2px;
-
   color: #f7fff0;
-
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 900;
-
-  animation: question-float 1.8s ease-in-out infinite;
 }
 
 .random-challenge-preview strong {
   color: #4d8a5d;
-  font-size: 12px;
+  font-size: 14px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* ==================================================
+   MAIN GAME SCREEN
+================================================== */
 
-@media (max-width: 480px) {
-  .start-popup-overlay {
-    padding: 11px;
+.main-game-screen {
+  overflow: hidden;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/main%20page/Main%20Page%20(Normal).png")
+    center / cover no-repeat;
+}
+
+.main-mode-overlay,
+.zoom-mode-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: background 300ms ease, backdrop-filter 300ms ease;
+}
+
+.mode-normal .main-mode-overlay,
+.mode-normal .zoom-mode-overlay {
+  background: rgba(132, 202, 87, 0.03);
+}
+
+.mode-hujan .main-mode-overlay,
+.mode-hujan .zoom-mode-overlay {
+  background: rgba(43, 117, 132, 0.24);
+  backdrop-filter: saturate(0.84) brightness(0.89);
+}
+
+.mode-kemarau .main-mode-overlay,
+.mode-kemarau .zoom-mode-overlay {
+  background: rgba(210, 193, 75, 0.23);
+  backdrop-filter: saturate(0.75) sepia(0.15) brightness(0.96);
+}
+
+.main-top-left,
+.weather-status-wrap,
+.hydroponic-area,
+.well-button,
+.grass-image,
+.main-right-menu,
+.next-day-button {
+  z-index: 3;
+}
+
+.main-top-left {
+  position: absolute;
+  top: 22px;
+  left: 9.7%;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.game-profile-board {
+  position: relative;
+  width: clamp(220px, 15vw, 295px);
+  aspect-ratio: 1.55 / 1;
+}
+
+.game-profile-board-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.game-user-initial {
+  position: absolute;
+  top: 14%;
+  left: 9%;
+  width: 15%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  color: #ab502b;
+  font-size: clamp(16px, 1.5vw, 28px);
+  font-weight: 900;
+}
+
+.game-user-name {
+  position: absolute;
+  top: 14%;
+  left: 34%;
+  width: 57%;
+  color: #aa4f2b;
+  font-size: clamp(13px, 1.35vw, 24px);
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-day-label {
+  position: absolute;
+  top: 49.5%;
+  left: 11%;
+  width: 35%;
+  height: 14%;
+  display: flex;
+  align-items: center;
+  color: #a9512d;
+  font-size: clamp(13px, 1.2vw, 22px);
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.game-fix-label {
+  position: absolute;
+  top: 68.5%;
+  left: 11%;
+  width: 35%;
+  height: 14%;
+  display: flex;
+  align-items: center;
+  color: #a9512d;
+  font-size: clamp(12px, 1.1vw, 20px);
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.panel-button {
+  width: clamp(72px, 5.2vw, 102px);
+}
+
+.seedling-notification {
+  min-width: 185px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/main%20page/Rectangle%20146.png")
+    center / 100% 100% no-repeat;
+}
+
+.seedling-notification:empty {
+  display: none;
+}
+
+.seedling-ready-item,
+.seedling-loading-item,
+.seedling-extra-badge {
+  width: 62px;
+  height: 62px;
+  flex: 0 0 auto;
+}
+
+.seedling-ready-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.seedling-loading-item {
+  display: grid;
+  place-items: center;
+}
+
+.seedling-loading-spinner {
+  width: 34px;
+  height: 34px;
+  border: 5px solid rgba(108, 161, 99, 0.25);
+  border-top-color: #65a86d;
+  border-radius: 50%;
+  animation: spinner 750ms linear infinite;
+}
+
+.seedling-extra-badge {
+  display: grid;
+  place-items: center;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/main%20page/Rectangle%20147.png")
+    center / 100% 100% no-repeat;
+  color: #ad532f;
+  font-size: 23px;
+  font-weight: 900;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.weather-status-wrap {
+  position: absolute;
+  top: 28%;
+  left: 9.8%;
+  width: clamp(62px, 4.5vw, 90px);
+}
+
+.main-weather-icon {
+  display: block;
+  width: 100%;
+  animation: weather-float 2.8s ease-in-out infinite;
+}
+
+@keyframes weather-float {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.hydroponic-area {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  width: min(54vw, 900px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  cursor: default;
+}
+
+.main-netpot-open-zone,
+.main-tank-open-zone {
+  position: absolute;
+  z-index: 6;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.main-netpot-open-zone {
+  left: 0;
+  top: 0;
+  width: 84%;
+  height: 100%;
+}
+
+.main-tank-open-zone {
+  right: 0;
+  top: 24%;
+  width: 17%;
+  height: 53%;
+  border-radius: 12px;
+}
+
+.main-netpot-open-zone:hover,
+.main-tank-open-zone:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.netpot-image {
+  display: block;
+  width: 100%;
+  filter: drop-shadow(0 8px 10px rgba(59, 84, 53, 0.15));
+}
+
+.plant-slots {
+  position: absolute;
+  inset: 22% 15% 19% 8%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 5%;
+  row-gap: 14%;
+  pointer-events: none;
+}
+
+.plant-slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.main-slot-plant {
+  width: 85%;
+  height: 110%;
+  object-fit: contain;
+  transform: translateY(-20%);
+}
+
+.well-button {
+  position: absolute;
+  left: 9.5%;
+  bottom: 8%;
+  width: clamp(145px, 12vw, 230px);
+}
+
+.grass-image {
+  position: absolute;
+  bottom: -2%;
+  width: min(23vw, 420px);
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.grass-left {
+  left: 24%;
+}
+
+.grass-right {
+  right: 22%;
+  transform: scaleX(-1);
+}
+
+.main-right-menu {
+  position: absolute;
+  top: 3%;
+  right: 8.7%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+}
+
+.right-action-button {
+  width: clamp(64px, 4.7vw, 92px);
+}
+
+.resource-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.resource-button span,
+.next-day-button span,
+.zoom-harvest-button span {
+  color: #effff4;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 3px 4px rgba(37, 64, 54, 0.35);
+}
+
+.resource-button span {
+  font-size: clamp(12px, 1.3vw, 23px);
+  line-height: 1.15;
+}
+
+.next-day-button {
+  position: absolute;
+  right: 6.7%;
+  bottom: 7%;
+  width: clamp(80px, 6vw, 118px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.next-day-button span {
+  width: 190px;
+  font-size: clamp(12px, 1.3vw, 23px);
+}
+
+/* ==================================================
+   ZOOM TANAMAN
+================================================== */
+
+.zoom-plant-screen {
+  overflow: hidden;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/zoom%20tanaman/latar.png")
+    center / cover no-repeat;
+}
+
+.zoom-back-button {
+  position: absolute;
+  z-index: 5;
+  top: 3%;
+  left: 9.5%;
+  width: clamp(62px, 4.8vw, 90px);
+}
+
+.zoom-netpot-area {
+  position: absolute;
+  z-index: 3;
+  left: 8.5%;
+  top: 17%;
+  width: min(57vw, 1050px);
+}
+
+.zoom-netpot-image {
+  display: block;
+  width: 100%;
+  filter: drop-shadow(0 10px 13px rgba(60, 80, 50, 0.16));
+}
+
+.zoom-plant-slots {
+  position: absolute;
+  inset: 8% 5% 8% 5%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 2.6%;
+  row-gap: 27%;
+}
+
+.zoom-plant-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.zoom-plant-slot.drag-over {
+  outline: 4px dashed rgba(94, 174, 104, 0.8);
+  outline-offset: -7px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.zoom-slot-plant {
+  width: 80%;
+  height: 105%;
+  object-fit: contain;
+  pointer-events: none;
+  animation: plant-pop 220ms ease-out;
+}
+
+@keyframes plant-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+.zoom-harvest-button {
+  position: absolute;
+  z-index: 5;
+  top: 3%;
+  left: 58.5%;
+  width: clamp(62px, 4.8vw, 90px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.zoom-harvest-button span {
+  font-size: clamp(13px, 1.4vw, 24px);
+}
+
+.zoom-side-panel {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 9.5%;
+  width: min(390px, 27vw);
+  height: 100vh;
+  padding: 8vh 28px 4vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/zoom%20tanaman/latar%20bibit.png")
+    center / 100% 100% no-repeat;
+}
+
+.zoom-inventory-tabs {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 38px;
+}
+
+.zoom-inventory-tab {
+  height: 60px;
+  border: 3px solid rgba(235, 255, 240, 0.9);
+  border-radius: 11px;
+  background: #d9edf0;
+  color: #8ebc68;
+  font-size: clamp(18px, 1.6vw, 30px);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: inset 0 -3px 0 rgba(95, 150, 90, 0.16);
+}
+
+.zoom-inventory-tab.active {
+  background: #96c679;
+  color: #fff;
+}
+
+.zoom-inventory-grid {
+  width: 100%;
+  height: 50vh;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 112px;
+  align-content: start;
+  border: 5px solid #45c3d0;
+  border-radius: 7px;
+  overflow-y: auto;
+  background: rgba(222, 246, 249, 0.82);
+}
+
+.zoom-inventory-grid::-webkit-scrollbar {
+  width: 13px;
+}
+
+.zoom-inventory-grid::-webkit-scrollbar-track {
+  background: rgba(224, 248, 248, 0.85);
+  border-radius: 10px;
+}
+
+.zoom-inventory-grid::-webkit-scrollbar-thumb {
+  background: #91bd64;
+  border-radius: 10px;
+}
+
+.inventory-item {
+  position: relative;
+  min-width: 0;
+  border: 3px solid #45c3d0;
+  background: rgba(224, 245, 247, 0.72);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.inventory-item.selected {
+  border-color: #93c76c;
+  background: rgba(210, 237, 205, 0.94);
+}
+
+.inventory-item.dragging {
+  opacity: 0.5;
+}
+
+.inventory-item img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.inventory-item strong {
+  max-width: 100%;
+  color: #659b5d;
+  font-size: clamp(10px, 0.9vw, 17px);
+  font-weight: 900;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inventory-count {
+  position: absolute;
+  top: 5px;
+  right: 9px;
+  color: #5b985c;
+  font-size: clamp(14px, 1.1vw, 23px);
+  font-weight: 900;
+}
+
+.inventory-empty {
+  grid-column: 1 / -1;
+  min-height: 110px;
+  display: grid;
+  place-items: center;
+  color: #60945f;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.zoom-sow-button {
+  width: 170px;
+  height: 62px;
+  margin-top: 32px;
+  border: 3px solid #8fbd65;
+  border-radius: 12px;
+  background: #dceef0;
+  color: #91bd64;
+  font-size: clamp(18px, 1.6vw, 30px);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: inset 0 -4px 0 rgba(113, 158, 84, 0.12);
+}
+
+.zoom-sow-button:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
+/* ==================================================
+   GLOBAL GAME MODALS
+================================================== */
+
+.game-modal {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(26, 55, 44, 0.54);
+  transition: opacity 160ms ease, visibility 160ms ease;
+}
+
+.game-modal.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.game-modal-card {
+  position: relative;
+  width: min(400px, 92vw);
+  padding: 30px 25px;
+  border: 3px solid rgba(237, 255, 239, 0.85);
+  border-radius: 23px;
+  background: linear-gradient(155deg, #cce8cf, #91c895);
+  box-shadow: 0 20px 48px rgba(28, 60, 42, 0.3);
+  text-align: center;
+}
+
+.game-modal-card h2 {
+  margin: 0 0 18px;
+  color: #47724e;
+}
+
+.game-modal-card p {
+  color: #4d7054;
+  line-height: 1.5;
+  max-height: 36vh;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+
+.game-modal-card > button:not(.game-modal-close) {
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px 14px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 11px;
+  background: #8dc778;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 900px) {
+  .brand-mascot {
+    width: min(190px, 30vw);
+  }
+
+  .main-top-left {
+    top: 14px;
+    left: 15px;
+  }
+
+  .game-profile-board {
+    width: 190px;
+  }
+
+  .panel-button {
+    width: 66px;
+  }
+
+  .seedling-notification {
+    min-width: 145px;
+    min-height: 62px;
+  }
+
+  .seedling-ready-item,
+  .seedling-loading-item,
+  .seedling-extra-badge {
+    width: 48px;
+    height: 48px;
+  }
+
+  .weather-status-wrap {
+    left: 18px;
+    width: 58px;
+  }
+
+  .hydroponic-area {
+    top: 40%;
+    width: 72vw;
+  }
+
+  .well-button {
+    left: 20px;
+    width: 130px;
+  }
+
+  .main-right-menu {
+    top: 14px;
+    right: 18px;
+  }
+
+  .right-action-button {
+    width: 58px;
+  }
+
+  .next-day-button {
+    right: 18px;
+    width: 68px;
+  }
+
+  .next-day-button span {
+    width: 115px;
+    font-size: 12px;
+  }
+
+  .zoom-back-button {
+    top: 16px;
+    left: 18px;
+    width: 58px;
+  }
+
+  .zoom-netpot-area {
+    left: 20px;
+    top: 19%;
+    width: 63vw;
+  }
+
+  .zoom-harvest-button {
+    top: 16px;
+    left: 57%;
+    width: 58px;
+  }
+
+  .zoom-side-panel {
+    right: 0;
+    width: 34vw;
+    padding: 7vh 14px 3vh;
+  }
+
+  .zoom-inventory-tabs {
+    gap: 8px;
+    margin-bottom: 23px;
+  }
+
+  .zoom-inventory-tab {
+    height: 46px;
+    font-size: 17px;
+  }
+
+  .zoom-inventory-grid {
+    height: 52vh;
+    grid-auto-rows: 90px;
+  }
+
+  .inventory-item img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .zoom-sow-button {
+    width: 125px;
+    height: 48px;
+    margin-top: 22px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-center {
+    width: 96vw;
+  }
+
+  .brand-group {
+    margin-bottom: 10px;
+  }
+
+  .secondary-menu {
+    gap: 7px;
+    padding: 13px 14px;
+  }
+
+  .start-button,
+  .collection-button {
+    width: 118px;
+  }
+
+  .settings-button {
+    width: 82px;
+  }
+
+  .profile-button {
+    left: 14px;
+    bottom: 14px;
+    width: 72px;
+  }
+
+  .about-button {
+    right: 14px;
+    bottom: 14px;
+    width: 52px;
+  }
+
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .start-popup-card {
-    width: 95vw;
-    min-height: 320px;
-
-    padding: 13px 13px 12px;
-
-    border-radius: 19px;
+    width: 97vw;
+    min-height: 380px;
+    padding: 15px 14px 13px;
   }
 
   .start-tabs {
     gap: 7px;
-    margin-bottom: 19px;
+    margin-bottom: 22px;
   }
 
   .start-tab {
-    height: 29px;
-    font-size: 11px;
+    height: 34px;
+    font-size: 13px;
   }
 
   .mode-selector {
-    grid-template-columns: 29px minmax(0, 1fr) 29px;
-    gap: 8px;
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    gap: 9px;
   }
 
   .mode-arrow-button {
-    width: 29px;
-    height: 54px;
+    width: 36px;
+    height: 62px;
   }
 
   .mode-display {
-    min-height: 59px;
+    min-height: 72px;
+    padding: 21px 13px 10px;
+  }
+}
+
+
+/* ==================================================
+   ZOOM TANDON
+================================================== */
+
+.zoom-tank-screen {
+  overflow: hidden;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/zoom%20tanaman/latar.png")
+    center / cover no-repeat;
+}
+
+.tank-back-button {
+  position: absolute;
+  z-index: 5;
+  top: 3%;
+  left: 9.5%;
+  width: clamp(62px, 4.8vw, 90px);
+}
+
+.tank-nutrient-meter {
+  position: absolute;
+  z-index: 4;
+  left: 9.5%;
+  top: 18%;
+  width: clamp(95px, 8vw, 145px);
+  height: 70%;
+}
+
+.tank-meter-track {
+  position: absolute;
+  left: 20%;
+  top: 8%;
+  bottom: 8%;
+  width: 34%;
+  overflow: hidden;
+  border: 3px solid rgba(74, 133, 100, 0.38);
+  border-radius: 12px;
+  background: #d4eef1;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.38);
+}
+
+.tank-meter-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background: #f4c900;
+  transition: height 280ms ease, background 280ms ease;
+}
+
+.tank-meter-limit,
+.tank-meter-value {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  min-height: 34px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  color: #f3fff2;
+  font-size: clamp(13px, 1.25vw, 22px);
+  font-weight: 900;
+  text-shadow: 0 2px 3px rgba(42, 76, 56, 0.25);
+}
+
+.tank-meter-max {
+  left: 14%;
+  top: 0;
+  background: #83bc76;
+}
+
+.tank-meter-min {
+  left: 14%;
+  bottom: 0;
+  background: #83bc76;
+}
+
+.tank-meter-value {
+  left: 64%;
+  bottom: 45%;
+  background: #f4c900;
+  transition: bottom 280ms ease, background 280ms ease;
+}
+
+.tank-stage {
+  position: absolute;
+  z-index: 3;
+  left: 26%;
+  top: 27%;
+  width: min(48vw, 900px);
+}
+
+.tank-main-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 14px rgba(53, 76, 56, 0.15));
+}
+
+.tank-pump-image {
+  position: absolute;
+  top: -46%;
+  right: -2%;
+  width: 28%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 9px rgba(45, 70, 68, 0.18));
+}
+
+.tank-right-actions {
+  position: absolute;
+  z-index: 5;
+  top: 3%;
+  right: 9.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.tank-action-button {
+  width: clamp(66px, 4.9vw, 94px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.tank-action-button span {
+  color: #effff4;
+  font-size: clamp(14px, 1.45vw, 25px);
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 0 3px 4px rgba(37, 64, 54, 0.35);
+}
+
+.tank-vitamin-area {
+  position: absolute;
+  z-index: 5;
+  right: 9.6%;
+  bottom: 9%;
+  width: clamp(115px, 9vw, 175px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.vitamin-bottle-image {
+  display: block;
+  width: 86%;
+  max-height: 190px;
+  object-fit: contain;
+}
+
+.vitamin-bottle-count {
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: rgba(126, 184, 111, 0.9);
+  color: #fff;
+  font-size: clamp(11px, 1vw, 17px);
+  font-weight: 900;
+}
+
+.fill-tank-button {
+  width: 100%;
+}
+
+.fill-tank-button.disabled,
+.fill-tank-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+}
+
+/* ==================================================
+   CONTROL PANEL POPUP
+================================================== */
+
+.control-panel-shell {
+  position: relative;
+  width: min(940px, 96vw);
+  aspect-ratio: 1428 / 864;
+}
+
+.control-panel-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.control-reading {
+  position: absolute;
+  left: 35.7%;
+  width: 50%;
+  display: grid;
+  grid-template-columns: minmax(72px, 14%) minmax(180px, 1fr) minmax(44px, 11%);
+  align-items: center;
+  gap: 2.3%;
+}
+
+.control-reading-ph {
+  top: 27.7%;
+}
+
+.control-reading-ppm {
+  top: 42.2%;
+}
+
+.control-reading-volume {
+  top: 56.8%;
+}
+
+.control-value {
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 5px 9px;
+  border-radius: 11px;
+  color: #fff;
+  font-size: clamp(15px, 1.7vw, 28px);
+  font-weight: 900;
+  box-shadow: inset 0 -4px 0 rgba(53, 94, 68, 0.16);
+}
+
+.control-bar {
+  height: clamp(34px, 3.4vw, 54px);
+  overflow: hidden;
+  border: 4px solid #78a755;
+  border-radius: 14px;
+  background: #d8edf0;
+}
+
+.control-bar-fill {
+  width: 50%;
+  height: 100%;
+  background: #8fc66f;
+  transition: width 260ms ease, background 260ms ease;
+}
+
+.control-status-icon {
+  display: grid;
+  place-items: center;
+  font-size: clamp(28px, 3vw, 52px);
+  line-height: 1;
+  filter: saturate(1.15);
+}
+
+.control-panel-back-button {
+  position: absolute;
+  z-index: 4;
+  left: 10.2%;
+  bottom: 13.8%;
+  width: 79.6%;
+  height: 8.3%;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.control-panel-back-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ==================================================
+   VITAMIN CHALLENGE
+================================================== */
+
+.vitamin-challenge-card {
+  position: relative;
+  width: min(440px, 92vw);
+  padding: 34px 28px 28px;
+  border: 4px solid rgba(235, 255, 237, 0.9);
+  border-radius: 24px;
+  background: linear-gradient(155deg, #cce8cf, #7fc49a);
+  box-shadow: 0 20px 48px rgba(28, 60, 42, 0.32);
+  text-align: center;
+}
+
+.vitamin-challenge-card h2 {
+  margin: 0 0 12px;
+  color: #47724e;
+}
+
+.vitamin-challenge-card p {
+  margin: 0 0 20px;
+  color: #4d7054;
+  line-height: 1.5;
+}
+
+.vitamin-challenge-progress {
+  width: 100%;
+  height: 24px;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 14px;
+  background: #dceff0;
+}
+
+.vitamin-challenge-fill {
+  width: 0;
+  height: 100%;
+  background: #8fc66f;
+  transition: width 160ms ease;
+}
+
+.vitamin-challenge-text {
+  display: block;
+  margin: 10px 0 16px;
+  color: #47724e;
+  font-size: 20px;
+}
+
+.vitamin-mix-button {
+  width: 100%;
+  min-height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  background: #8dc778;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.vitamin-mix-button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+@media (max-width: 900px) {
+  .tank-back-button {
+    top: 16px;
+    left: 18px;
+    width: 58px;
   }
 
-  .mode-content strong {
-    font-size: 17px;
+  .tank-nutrient-meter {
+    left: 22px;
+    top: 18%;
+    width: 95px;
+    height: 72%;
   }
 
-  .selected-mode-icon {
-    width: 29px;
+  .tank-stage {
+    left: 24%;
+    top: 34%;
+    width: 52vw;
+  }
+
+  .tank-right-actions {
+    top: 16px;
+    right: 18px;
+  }
+
+  .tank-action-button {
+    width: 58px;
+  }
+
+  .tank-vitamin-area {
+    right: 18px;
+    bottom: 7%;
+    width: 110px;
+  }
+
+  .control-reading {
+    grid-template-columns: minmax(58px, 14%) minmax(150px, 1fr) minmax(38px, 11%);
+  }
+
+  .control-value {
+    min-height: 34px;
+  }
+
+  .control-bar {
+    height: 38px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tank-nutrient-meter {
+    left: 8px;
+    width: 78px;
+  }
+
+  .tank-stage {
+    left: 18%;
+    top: 37%;
+    width: 62vw;
+  }
+
+  .tank-pump-image {
+    width: 31%;
+  }
+
+  .tank-right-actions {
+    right: 10px;
+    gap: 10px;
+  }
+
+  .tank-vitamin-area {
+    right: 8px;
+    width: 88px;
+  }
+
+  .tank-action-button span {
+    font-size: 11px;
+  }
+
+  .tank-meter-limit,
+  .tank-meter-value {
+    min-width: 48px;
+    min-height: 26px;
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+
+  .control-reading {
+    left: 35%;
+    width: 51%;
+    grid-template-columns: 50px 1fr 34px;
+    gap: 4px;
+  }
+
+  .control-value {
+    min-height: 28px;
+    padding: 3px 5px;
+    font-size: 12px;
+  }
+
+  .control-bar {
     height: 29px;
+    border-width: 3px;
   }
 
-  .mode-description {
-    margin-left: 9px;
-    margin-right: 9px;
+  .control-status-icon {
+    font-size: 24px;
+  }
+}
+
+/* ==================================================
+   MINI GAME: NYEMAI, RACIK, CRIMPING
+   Final override - harus berada paling bawah
+================================================== */
+
+.mini-game-modal {
+  padding: 10px;
+  background: rgba(18, 43, 45, 0.72);
+}
+
+.mini-game-shell {
+  position: relative;
+  overflow: hidden;
+  flex: 0 0 auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  filter: drop-shadow(0 18px 26px rgba(20, 52, 53, 0.32));
+  user-select: none;
+  touch-action: none;
+}
+
+.mini-game-exit {
+  position: absolute;
+  z-index: 30;
+  top: 14%;
+  right: 6.2%;
+  width: 8.2%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mini-game-exit img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.mini-game-message {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  bottom: 2.2%;
+  width: 78%;
+  margin: 0;
+  padding: 7px 12px;
+  border-radius: 12px;
+  background: rgba(233, 252, 252, 0.86);
+  color: #4f8791;
+  font-size: clamp(10px, 1.15vw, 17px);
+  font-weight: 800;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+/* ---------- NYEMAI ---------- */
+
+.sowing-game-shell {
+  width: min(94vw, calc(92vh * 1.079));
+  aspect-ratio: 1.079 / 1;
+  background-image: url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/nyemai/Pazel%20Cemai%20(After).png");
+}
+
+.sowing-timer-badge {
+  position: absolute;
+  z-index: 25;
+  top: 16.5%;
+  left: 6.8%;
+  min-width: 74px;
+  padding: 8px 12px;
+  border: 3px solid rgba(235, 255, 249, 0.9);
+  border-radius: 14px;
+  background: #94c978;
+  color: #fff;
+  font-size: clamp(15px, 1.8vw, 27px);
+  font-weight: 900;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(54, 110, 91, 0.2);
+}
+
+.sowing-puzzle-board {
+  position: absolute;
+  z-index: 10;
+  left: 29.55%;
+  top: 29.7%;
+  width: 55.05%;
+  height: 57.45%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0;
+}
+
+.sowing-puzzle-tile {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(53, 191, 211, 0.34);
+  background: #cfeef2;
+  cursor: grab;
+  touch-action: none;
+}
+
+.sowing-puzzle-tile:active,
+.sowing-puzzle-tile.dragging {
+  cursor: grabbing;
+  opacity: 0.66;
+  transform: scale(0.96);
+}
+
+.sowing-puzzle-tile.selected {
+  z-index: 3;
+  outline: 4px solid #95ca72;
+  outline-offset: -4px;
+}
+
+.sowing-puzzle-tile.drag-over {
+  z-index: 4;
+  outline: 4px dashed #4caec1;
+  outline-offset: -5px;
+}
+
+.sowing-puzzle-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* ---------- RACIK MANIA ---------- */
+
+.racik-game-shell {
+  width: min(92vw, calc(92vh * 0.984));
+  aspect-ratio: 0.984 / 1;
+  background-image: url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/tiki%20taka/Pazel%20Racik%20(Before).png");
+}
+
+.racik-status {
+  position: absolute;
+  z-index: 25;
+  left: 6.5%;
+  top: 18%;
+  padding: 7px 12px;
+  border: 3px solid rgba(236, 255, 245, 0.88);
+  border-radius: 12px;
+  background: #94c978;
+  color: #fff;
+  font-size: clamp(11px, 1.25vw, 18px);
+  font-weight: 900;
+}
+
+.racik-card-grid {
+  position: absolute;
+  z-index: 10;
+  left: 22.7%;
+  top: 35.0%;
+  width: 55.4%;
+  height: 53.5%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0;
+}
+
+.racik-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  border: 2px solid rgba(52, 192, 214, 0.78);
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.racik-card::before {
+  content: "?";
+  color: #5cb5c7;
+  font-size: clamp(30px, 5vw, 64px);
+  font-weight: 900;
+}
+
+.racik-card.revealed,
+.racik-card.matched {
+  background: rgba(215, 242, 245, 0.96);
+}
+
+.racik-card.revealed::before,
+.racik-card.matched::before {
+  display: none;
+}
+
+.racik-card.matched {
+  box-shadow: inset 0 0 0 5px rgba(146, 201, 113, 0.75);
+  cursor: default;
+}
+
+.racik-card.black-match {
+  box-shadow: inset 0 0 0 5px rgba(194, 52, 47, 0.68);
+}
+
+.racik-card img {
+  display: none;
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.racik-card.revealed img,
+.racik-card.matched img {
+  display: block;
+}
+
+/* ---------- CRIMPING CABLE ---------- */
+
+.crimping-game-shell {
+  width: min(95vw, calc(91vh * 1.215));
+  aspect-ratio: 1.215 / 1;
+  background-image: url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/tiki%20taka/Pazel%20Crimping%20kabel%20(Before).png");
+}
+
+.crimping-status {
+  position: absolute;
+  z-index: 30;
+  top: 16.5%;
+  left: 6.2%;
+  padding: 7px 12px;
+  border: 3px solid rgba(236, 255, 245, 0.88);
+  border-radius: 12px;
+  background: #94c978;
+  color: #fff;
+  font-size: clamp(11px, 1.25vw, 18px);
+  font-weight: 900;
+}
+
+.crimping-cable-svg {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.cable-endpoint {
+  position: absolute;
+  z-index: 20;
+  width: 7.5%;
+  height: 9.5%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.cable-endpoint-left { left: 1.8%; }
+.cable-endpoint-right { right: 1.8%; }
+
+.cable-endpoint-left.cable-yellow,
+.cable-endpoint-right.cable-blue { top: 31.7%; }
+
+.cable-endpoint-left.cable-blue,
+.cable-endpoint-right.cable-red { top: 46.3%; }
+
+.cable-endpoint-left.cable-green,
+.cable-endpoint-right.cable-green { top: 61.0%; }
+
+.cable-endpoint-left.cable-red,
+.cable-endpoint-right.cable-yellow { top: 75.7%; }
+
+.cable-endpoint.connected {
+  cursor: default;
+}
+
+.cable-endpoint.active {
+  outline: 5px solid rgba(255, 255, 255, 0.9);
+  outline-offset: -4px;
+}
+
+/* ---------- WARNING POMPA ---------- */
+
+.pump-warning {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 5px rgba(117, 20, 20, 0.32));
+  animation: pump-warning-pulse 850ms ease-in-out infinite alternate;
+}
+
+.pump-warning[hidden] {
+  display: none !important;
+}
+
+@keyframes pump-warning-pulse {
+  to {
+    transform: scale(1.12);
+    filter: brightness(1.15) drop-shadow(0 6px 7px rgba(117, 20, 20, 0.48));
+  }
+}
+
+.main-pump-warning {
+  position: absolute;
+  z-index: 9;
+  right: 4.7%;
+  top: 20%;
+  width: 5.6%;
+  height: 25%;
+  pointer-events: none;
+}
+
+.pump-repair-button {
+  position: absolute;
+  z-index: 9;
+  top: -47%;
+  right: -2%;
+  width: 28%;
+  height: 48%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tank-pump-warning {
+  position: absolute;
+  right: 31%;
+  top: -8%;
+  width: 18%;
+  height: 70%;
+}
+
+@media (max-width: 640px) {
+  .mini-game-message {
+    width: 88%;
+    padding: 5px 8px;
+    font-size: 9px;
+  }
+
+  .sowing-timer-badge,
+  .racik-status,
+  .crimping-status {
+    padding: 4px 7px;
+    border-width: 2px;
+  }
+}
+
+/* ==================================================
+   HOTFIX MINI GAME — sinkron dengan HTML/JS
+================================================== */
+.mini-game-modal {
+  z-index: 500 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-game-modal.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tank-pump-button {
+  position: absolute;
+  top: -46%;
+  right: -2%;
+  width: 28%;
+  aspect-ratio: 1.7 / 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tank-pump-button .tank-pump-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tank-pump-button .tank-pump-warning {
+  position: absolute;
+  z-index: 6;
+  top: -12%;
+  right: -6%;
+  width: 34%;
+  height: 58%;
+}
+
+.main-pump-warning {
+  pointer-events: none;
+}
+
+
+/* ==================================================
+   UPDATE: MODAL AWAL, SUMBER DAYA, HADIAH, PIPA, PAUSE
+================================================== */
+
+[hidden] {
+  display: none !important;
+}
+
+/* Warning pipa pada main page dan zoom tanaman */
+.main-pipe-warning,
+.zoom-pipe-warning {
+  position: absolute;
+  z-index: 12;
+  width: clamp(48px, 4vw, 78px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  animation: warning-pulse 1s ease-in-out infinite alternate;
+}
+
+.main-pipe-warning {
+  left: 45%;
+  top: 26%;
+}
+
+.zoom-pipe-warning img,
+.main-pipe-warning img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.zoom-pipe-warning.position-left {
+  left: 6%;
+  top: 46%;
+}
+
+.zoom-pipe-warning.position-center {
+  left: 47%;
+  top: 42%;
+}
+
+.zoom-pipe-warning.position-right {
+  right: 5%;
+  top: 55%;
+}
+
+@keyframes warning-pulse {
+  to {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 12px rgba(242, 65, 58, 0.7));
+  }
+}
+
+/* Modal awal */
+.initial-grant-popup {
+  z-index: 280;
+  background: rgba(23, 55, 51, 0.62);
+}
+
+.initial-grant-shell {
+  position: relative;
+  width: min(760px, 95vw);
+  aspect-ratio: 1.25 / 1;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hadiah%2C%20sda%2C%20pause/Modal%20Awal-1.png")
+    center / 100% 100% no-repeat;
+}
+
+.initial-grant-items {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 35%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8%;
+}
+
+.grant-item-card,
+.reward-item-card {
+  position: relative;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #5f9654;
+  text-align: center;
+}
+
+.grant-card-background,
+.reward-card-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 0;
+}
+
+.grant-item-icon,
+.reward-fix-icon {
+  position: relative;
+  z-index: 1;
+  width: 40%;
+  height: 90px;
+  object-fit: contain;
+}
+
+.grant-item-card strong,
+.reward-item-card strong {
+  position: absolute;
+  z-index: 2;
+  top: 9%;
+  right: 12%;
+  font-size: clamp(20px, 2.2vw, 38px);
+}
+
+.grant-item-card span,
+.reward-item-card span {
+  position: relative;
+  z-index: 1;
+  margin-top: 6px;
+  font-size: clamp(15px, 1.5vw, 26px);
+  font-weight: 900;
+}
+
+.initial-grant-start {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  width: 30%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.initial-grant-start img {
+  display: block;
+  width: 100%;
+}
+
+/* Sumber daya */
+.resource-popup {
+  z-index: 260;
+  background: rgba(19, 49, 49, 0.58);
+}
+
+.resource-shell {
+  position: relative;
+  width: min(1050px, 96vw);
+  aspect-ratio: 1.46 / 1;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hadiah%2C%20sda%2C%20pause/Sumber%20Daya%20latar%20fix.png")
+    center / 100% 100% no-repeat;
+}
+
+.art-popup-exit {
+  position: absolute;
+  z-index: 5;
+  right: 6.2%;
+  top: 15.5%;
+  width: 7%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.art-popup-exit img {
+  display: block;
+  width: 100%;
+}
+
+.resource-grid {
+  position: absolute;
+  left: 5.5%;
+  right: 6.2%;
+  top: 37.5%;
+  bottom: 8%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 33.333%;
+  overflow-y: auto;
+}
+
+.resource-item {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-right: 3px solid rgba(57, 191, 209, 0.9);
+  border-bottom: 3px solid rgba(57, 191, 209, 0.9);
+  color: #639851;
+  text-align: center;
+}
+
+.resource-item img {
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+}
+
+.resource-item span {
+  font-size: clamp(10px, 1vw, 17px);
+  font-weight: 900;
+}
+
+.resource-item-count {
+  position: absolute;
+  top: 6%;
+  right: 9%;
+  font-size: clamp(16px, 1.7vw, 29px);
+}
+
+.resource-empty-message {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  top: 55%;
+  margin: 0;
+  color: #5f9654;
+  font-size: clamp(18px, 2vw, 34px);
+  font-weight: 900;
+  text-align: center;
+}
+
+/* Hadiah */
+.reward-popup {
+  z-index: 300;
+  background: rgba(22, 52, 50, 0.62);
+}
+
+.reward-shell {
+  position: relative;
+  width: min(650px, 94vw);
+  aspect-ratio: 1.08 / 1;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hadiah%2C%20sda%2C%20pause/Hadiah%20latar%202.png")
+    center / 100% 100% no-repeat;
+}
+
+.reward-item-card {
+  position: absolute;
+  left: 32%;
+  right: 32%;
+  top: 32%;
+  min-height: 190px;
+}
+
+.reward-message {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 20%;
+  margin: 0;
+  color: #4e8461;
+  font-size: clamp(13px, 1.35vw, 21px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.reward-continue-button {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  width: 34%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.reward-continue-button img {
+  display: block;
+  width: 100%;
+}
+
+/* Pause */
+.pause-popup {
+  z-index: 270;
+  background: rgba(18, 45, 45, 0.62);
+}
+
+.pause-menu-shell {
+  position: relative;
+  width: min(650px, 94vw);
+  aspect-ratio: 1.12 / 1;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hadiah%2C%20sda%2C%20pause/Paused%20Menu-1.png")
+    center / 100% 100% no-repeat;
+}
+
+.pause-menu-actions {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 30%;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4%;
+}
+
+.pause-art-button {
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pause-art-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pause-save-exit {
+  flex: 1.15;
+}
+
+/* Puzzle pipa */
+.pipe-game-shell {
+  position: relative;
+  width: min(900px, 96vw);
+  aspect-ratio: 1.48 / 1;
+  background:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/tiki%20taka/pazel%20pipa%20latar.png")
+    center / 100% 100% no-repeat;
+}
+
+.pipe-puzzle-grid {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 30%;
+  bottom: 18%;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.pipe-puzzle-tile {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 7%;
+  border: 2px solid rgba(69, 189, 208, 0.38);
+  background: rgba(219, 244, 247, 0.22);
+  cursor: pointer;
+}
+
+.pipe-puzzle-tile img {
+  display: block;
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  transform: rotate(var(--pipe-rotation));
+  transition: transform 180ms ease;
+  pointer-events: none;
+}
+
+.pipe-puzzle-tile.correct {
+  background: rgba(151, 204, 117, 0.18);
+}
+
+.pipe-flow-start,
+.pipe-flow-end {
+  position: absolute;
+  top: 54%;
+  color: #effff4;
+  font-size: clamp(10px, 1.1vw, 17px);
+  font-weight: 900;
+}
+
+.pipe-flow-start {
+  left: 7%;
+}
+
+.pipe-flow-end {
+  right: 7%;
+}
+
+.pipe-game-shell .mini-game-message {
+  bottom: 7%;
+}
+
+@media (max-width: 700px) {
+  .initial-grant-items {
+    left: 15%;
+    right: 15%;
+  }
+
+  .grant-item-card,
+  .reward-item-card {
+    min-height: 120px;
+  }
+
+  .grant-item-icon,
+  .reward-fix-icon {
+    height: 58px;
+  }
+
+  .resource-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .pause-menu-actions {
+    left: 22%;
+    right: 22%;
+  }
+
+  .pipe-puzzle-grid {
+    left: 12%;
+    right: 12%;
+    top: 29%;
+    bottom: 17%;
+  }
+}
+
+
+/* ==================================================
+   FINAL FIX — PIPA, WARNING, STARTER PACK, HADIAH, PAUSE
+   Diletakkan paling bawah agar mengalahkan aturan lama.
+================================================== */
+
+/* ---------- WARNING PIPA: kecil dan berada di ujung netpot ---------- */
+.main-pipe-warning,
+.zoom-pipe-warning {
+  width: clamp(24px, 2.25vw, 42px) !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+.main-pipe-warning img,
+.zoom-pipe-warning img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  animation: pipe-warning-pulse 900ms ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.main-pipe-warning {
+  left: 0.8% !important;
+  top: 53% !important;
+  right: auto !important;
+  transform: translate(-35%, -50%) !important;
+}
+
+.zoom-pipe-warning.position-left {
+  left: 1.2% !important;
+  top: 50% !important;
+  right: auto !important;
+  transform: translate(-25%, -50%) !important;
+}
+
+.zoom-pipe-warning.position-center {
+  left: 49% !important;
+  top: 50% !important;
+  right: auto !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.zoom-pipe-warning.position-right {
+  left: auto !important;
+  right: 1.2% !important;
+  top: 50% !important;
+  transform: translate(25%, -50%) !important;
+}
+
+@keyframes pipe-warning-pulse {
+  from {
+    transform: scale(0.94);
+    filter: drop-shadow(0 2px 3px rgba(150, 22, 22, 0.32));
+  }
+  to {
+    transform: scale(1.08);
+    filter: brightness(1.08) drop-shadow(0 4px 6px rgba(190, 25, 25, 0.55));
+  }
+}
+
+/* ---------- MODAL AWAL: tombol dan item tetap di dalam latar ---------- */
+.initial-grant-shell {
+  width: min(620px, 92vw, calc(94vh * 0.955)) !important;
+  aspect-ratio: 1038 / 1087 !important;
+  background-image:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hadiah%2C%20sda%2C%20pause/Modal%20Awal%20latar%203.png") !important;
+  background-size: 100% 100% !important;
+}
+
+.initial-grant-items {
+  left: 16% !important;
+  right: 16% !important;
+  top: 35% !important;
+  bottom: 39% !important;
+  gap: 7% !important;
+}
+
+.grant-item-card {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+.grant-item-icon {
+  width: 42% !important;
+  height: 48% !important;
+}
+
+.initial-grant-start {
+  left: 50% !important;
+  bottom: 21% !important;
+  width: 34% !important;
+}
+
+/* ---------- HADIAH: seluruh isi dan tombol di dalam panel ---------- */
+.reward-shell {
+  width: min(600px, 92vw, calc(94vh * 0.955)) !important;
+  aspect-ratio: 1038 / 1087 !important;
+  background-image:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hadiah%2C%20sda%2C%20pause/Hadiah%20latar%203.png") !important;
+  background-size: 100% 100% !important;
+}
+
+.reward-item-card {
+  left: 32% !important;
+  right: 32% !important;
+  top: 35% !important;
+  bottom: 42% !important;
+  min-height: 0 !important;
+}
+
+.reward-fix-icon {
+  width: 44% !important;
+  height: 48% !important;
+}
+
+.reward-message {
+  left: 15% !important;
+  right: 15% !important;
+  bottom: 31% !important;
+  font-size: clamp(11px, 1.2vw, 18px) !important;
+}
+
+.reward-continue-button {
+  bottom: 20.5% !important;
+  width: 36% !important;
+}
+
+/* ---------- PAUSE: empat tombol sepenuhnya di area biru ---------- */
+.pause-menu-shell {
+  width: min(720px, 94vw, calc(94vh * 1.2)) !important;
+  aspect-ratio: 1080 / 900 !important;
+  background-image:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/hadiah%2C%20sda%2C%20pause/Paused%20Menu%203.png") !important;
+  background-size: 100% 100% !important;
+}
+
+.pause-menu-actions {
+  left: 25% !important;
+  right: 25% !important;
+  top: 31% !important;
+  bottom: 15% !important;
+  gap: 3% !important;
+}
+
+.pause-art-button,
+.pause-save-exit {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+}
+
+.pause-art-button img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* ---------- PUZZLE PIPA: tepat mengikuti grid 7 x 4 pada latar ---------- */
+.pipe-game-shell {
+  width: min(920px, 96vw, calc(94vh * 1.236)) !important;
+  aspect-ratio: 1278 / 1034 !important;
+  background-image:
+    url("https://raw.githubusercontent.com/firaamdhni/INF312-2026-HydroAdapt/refs/heads/main/tiki%20taka/pazel%20pipa%20latar.png") !important;
+  background-size: 100% 100% !important;
+}
+
+.pipe-game-shell .mini-game-exit {
+  top: 16.5% !important;
+  right: 5.7% !important;
+  width: 6.4% !important;
+}
+
+.pipe-puzzle-grid {
+  left: 10% !important;
+  right: 10% !important;
+  top: 28% !important;
+  bottom: 14% !important;
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
+  gap: 4px !important;
+  overflow: visible !important;
+}
+
+.pipe-puzzle-cell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.pipe-puzzle-tile {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: visible !important;
+  cursor: pointer;
+}
+
+.pipe-puzzle-tile.correct {
+  background: transparent !important;
+}
+
+.pipe-puzzle-tile img {
+  display: block !important;
+  object-fit: fill !important;
+  transform: rotate(var(--pipe-rotation)) !important;
+  transform-origin: center !important;
+  transition: transform 170ms ease !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 2px 2px rgba(52, 54, 54, 0.16));
+}
+
+.pipe-puzzle-tile.pipe-elbow img {
+  width: 68% !important;
+  height: 68% !important;
+}
+
+.pipe-puzzle-tile.pipe-straight img {
+  width: 25% !important;
+  height: 88% !important;
+}
+
+.pipe-flow-start,
+.pipe-flow-end {
+  z-index: 12 !important;
+  font-size: clamp(8px, 0.85vw, 13px) !important;
+  transform: translateY(-50%);
+}
+
+.pipe-flow-start {
+  left: 3.2% !important;
+  top: 35.3% !important;
+}
+
+.pipe-flow-end {
+  right: 3.2% !important;
+  top: 64.3% !important;
+}
+
+.pipe-game-shell .mini-game-message {
+  bottom: 5.5% !important;
+  width: 70% !important;
+  padding: 5px 10px !important;
+  font-size: clamp(8px, 0.9vw, 13px) !important;
+}
+
+@media (max-width: 700px) {
+  .initial-grant-shell,
+  .reward-shell {
+    width: min(92vw, calc(92vh * 0.955)) !important;
+  }
+
+  .pause-menu-shell {
+    width: min(94vw, calc(92vh * 1.2)) !important;
+  }
+
+  .pipe-game-shell {
+    width: min(97vw, calc(92vh * 1.236)) !important;
+  }
+
+  .main-pipe-warning,
+  .zoom-pipe-warning {
+    width: clamp(22px, 4vw, 34px) !important;
+  }
+}
+
+/* ==================================================
+   NEW ART-BASED POPUPS (PANEN / GAME OVER)
+================================================== */
+
+.game-over-popup,
+.harvest-result-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(15, 10, 10, 0.75);
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.game-over-popup.show,
+.harvest-result-popup.show {
+  display: flex !important;
+}
+
+.panen-popup-shell {
+  position: relative;
+  width: min(520px, 92vw, calc(92vh * 0.893));
+  aspect-ratio: 856 / 959;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 10;
+  display: block;
+}
+
+.panen-popup-shell.fail-state {
+  width: min(520px, 92vw, calc(92vh * 0.936));
+  aspect-ratio: 856 / 915;
+}
+
+.panen-popup-shell.fail-state::after {
+  content: none;
+}
+
+.panen-popup-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Descriptive message positioned in the empty space below title and above stats */
+.panen-popup-message {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 25%;
+  height: 12%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: clamp(11.5px, 1.38vw, 15.5px);
+  font-weight: 800;
+  line-height: 1.4;
+  color: #2e5944;
+  z-index: 5;
+  margin: 0;
+  padding: 0 10px;
+  overflow-wrap: anywhere;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.panen-popup-shell.fail-state .panen-popup-message {
+  top: 21%;
+  height: 10%;
+  font-size: clamp(10px, 1.12vw, 13px);
+  line-height: 1.25;
+  color: #722620;
+}
+
+/* Statistik panel */
+.panen-stat-area {
+  position: absolute;
+  left: 11%;
+  width: 78%;
+  top: 42%;
+  aspect-ratio: 661 / 265;
+  z-index: 5;
+}
+
+.panen-popup-shell.fail-state .panen-stat-area {
+  left: 12%;
+  width: 76%;
+  top: 40.5%;
+}
+
+.panen-stat-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.panen-stat-rows {
+  position: absolute;
+  inset: 0; /* Align with no boundary offsets */
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.panen-stat-row {
+  position: relative;
+  height: 22%;
+  width: 100%;
+}
+
+/* Hide duplicate label text since it's pre-drawn inside the statistik.png card asset */
+.panen-stat-label {
+  display: none !important;
+}
+
+/* Render the progress bar tracks natively on top of the clean statistik_new.png card asset */
+.panen-stat-bar {
+  position: absolute;
+  left: 43%;
+  width: 30.5%;
+  height: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #dbeef3;
+  border: 1.5px solid #ffffff;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.panen-stat-fill {
+  height: 100%;
+  background: #87c540;
+  border-radius: 8px;
+  transition: width 0.5s ease-out;
+}
+
+.panen-popup-shell.fail-state .panen-stat-fill {
+  background: #d84315;
+}
+
+/* Render the value text pill backgrounds natively on top of the clean statistik_new.png card asset */
+.panen-stat-value {
+  position: absolute;
+  left: 80%;
+  width: 15%;
+  height: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(10px, 1.25vw, 13px);
+  font-weight: 900;
+  color: #5c9a3a;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.panen-popup-shell.fail-state .panen-stat-value {
+  color: #c62828;
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Action buttons stacked at the bottom */
+.panen-popup-buttons {
+  position: absolute;
+  left: 11%;
+  width: 78%;
+  bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 5;
+}
+
+.panen-popup-shell.fail-state .panen-popup-buttons {
+  left: 13%;
+  width: 74%;
+  bottom: 6.5%;
+  gap: 6px;
+}
+
+.panen-popup-btn {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 665 / 79;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.panen-popup-btn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.panen-popup-btn:hover {
+  transform: translateY(-1.5px) scale(1.01);
+  filter: brightness(1.05);
+}
+
+.panen-popup-btn:active {
+  transform: scale(0.98);
+}
+
+/* Action button text centered overlay */
+.panen-btn-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: clamp(11.5px, 1.35vw, 15px);
+  font-weight: 900;
+  color: #effff4;
+  text-shadow: 0 1.5px 3px rgba(35, 78, 56, 0.6);
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.panen-popup-shell.fail-state .panen-btn-text {
+  font-size: clamp(9.5px, 1.05vw, 13px);
+  line-height: 1.1;
+  padding: 0 14px;
+}
+
+/* Dynamic initial grant supports 3-5 items */
+.initial-grant-items {
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+}
+
+@media (max-width: 700px) {
+  .panen-popup-shell {
+    width: min(92vw, calc(92vh * 0.893)) !important;
+  }
+  .panen-popup-shell.fail-state {
+    width: min(92vw, calc(92vh * 0.936)) !important;
   }
 }
